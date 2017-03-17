@@ -1,0 +1,48 @@
+
+
+For computing minimum spanning tree of an undirected graph, two greedy algorithms are available, Kruskal's and Prim's
+
+1. Kruskal's MST algorithm
+
+    1) the algorithm consists of three steps:
+
+        Step1: Sort all the edges in non-decreasing order of their weight;
+        Step2: Pick the smallest edge each time. Check if it forms a cycle with the spinning tree formed so far.
+               If cycle is not formed, keep it in the spinning tree; otherwise, discard it.
+        Step3: Repeat Step2 until (V-1) edges in the spinning tree.
+
+    2) the algorithm can be implemented as a UNION-FIND algorithm with Union-By-Rank and Path Compression techniques.
+
+    3) The time complexity is O(ElogE) or O(VlogV), where E <= V^2. Step1 can be done in O(ElogE) time for worst case.
+       Union-Find can take almost O(logV) time, therefore, Step2+Step3 take O(VlogV) time almost. The total time
+       complexity is O(ElogE + VlogV). If the graph is complete, E = V^2, then O(ElogE).
+
+    Reference: http://www.geeksforgeeks.org/greedy-algorithms-set-6-dijkstras-shortest-path-algorithm/
+
+2. Prim's MST algorithm
+
+    1) The idea of Prim's is to maintain two sets of vertices. The first set contains the vertices already included in
+       the MST, while the other set contains the vertices not yet included. At each step, it considers all the edges
+       that connect the two sets, and picks the minimum weight edge from these edges. After picking the edge, it moves
+       the other endpoint of the edge to the vertex set containing the MST.
+
+       a group of edges that connects two set of vertices in a graph is called cut in graph theory. So, every step of
+       Prim's algorithm is to find the minimum cut.
+
+    2) Prim's algorithm
+        Step1: create a set called mstSet, which keeps track of vertices already included in the MST;
+        Step2: Assign a key value to all vertices in the input graph. Initialize all key values as INFINITE. Assign key
+               value as 0 for the first vertex so that it is picked first.
+        Step3: While mstSet doesn't include all vertices:
+            3.1 Pick a vertex u which is not included in mstSet and has the minimum key value
+            3.2 include u to mstSet
+            3.3 Update key value of all adjacent vertices of u. For each adjacent vertex v, if the weigh of edge(u,v)
+                is less than the previous key value of v, update the key value of v as the weight of edge(u,v)
+
+
+        The key values are used only for vertices which are not yet included in MST. The key value for these vertices
+        indicate the minimum weight edges connecting them to the set of vertices included in MST.
+
+    3) The time complexity is O(V^2). If the graph is represented as adjacent list, then the time complexity can be
+       reduced to O(ElogV) with the help of binary heap, where use binary heap to search the minimum weight edge in
+       O(logV) time.

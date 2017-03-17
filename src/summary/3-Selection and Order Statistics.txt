@@ -1,0 +1,12 @@
+
+Statistics refers to methods for combining a large amount of data (such as the scores of the whole class on a homework)
+into a single number of small set of numbers that give an overall flavor of the data. The phrase order statistics refers
+to statistical methods that depend only on the ordering of the data and not on its numerical values.
+
+So, for instance, the average of the data, while easy to compute and very important as an estimate of a central value,
+is not an order statistic. The mode (most commonly occurring value) also does not depend on ordering, although the most
+efficient methods for computing it in a comparison-based model involve sorting algorithms. The most commonly used order
+statistic is the median, the value in the middle position in the sorted order of the values. Again we can get the median
+easily in O(n log n) time via sorting, but maybe it's possible to do better? We'll see that the answer is yes, O(n).
+
+Here is a paper to talk about this kind of issue: https://www.ics.uci.edu/~eppstein/161/960125.html.

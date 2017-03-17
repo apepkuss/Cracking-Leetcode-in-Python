@@ -1,0 +1,30 @@
+
+
+Question 1: check if a string is palindromic.
+
+Solution: Two pointers, x and y, pointing to two ends of the string, compare the characters.
+          If they are same, increment x and decrement y, and continue the comparison until x >= y.
+
+
+
+
+Question 2: minimum insert operations to make a string become palindromic.
+
+Solution: dynamic programming
+
+    1. table[i][j] indicates the minimum insertions, which convert substring s[i...j] into a palindrome string
+    2. initialize all values of table as zero.
+    3. the transformation formula:
+        1) table[i][j] = table[i+1][j-1], if s[i] == s[j]
+        2) table[i][j] = min(table[i+1][j], table[i][j-1]) + 1, if s[i] != s[j]
+    4. final result is table[0][n-1]
+
+
+
+Question 3: minimum left add operations to make a string become palindromic.
+
+Solution: modified version of preprocessing subroutine of KMP algorithm
+
+    1. change s into s + reversed(s)
+    2. compute an auxiliary array lps based on s + reversed(s)
+    3. the final result is len(s) - lps[-1]

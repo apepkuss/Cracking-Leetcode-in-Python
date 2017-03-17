@@ -1,0 +1,55 @@
+
+
+*** Method 1: Brute Force
+
+Time complexity: O(n^3)
+Space complexity: O(1)
+
+
+
+*** Method 2: DP
+
+Time complexity: O(n^2)
+Space complexity: O(n^2)
+
+Table[i][j] indicates if str[i..j] is a palindrome.
+
+Table[i][j] =
+1. Table[i+1][j-1], if str[i] == str[j]
+2. False, otherwise.
+
+
+For details on method 1 and 2, see http://www.geeksforgeeks.org/longest-palindrome-substring-set-1/
+
+
+
+*** Method 3: The idea is to generate all even length and odd length palindromes and
+          keep track of the longest palindrome seen so far.
+
+Time complexity: O(n^2)
+Space complexity: O(1)
+
+1. Step to generate odd length palindrome: Fix a centre and expand in both directions for longer palindromes.
+2. Step to generate even length palindrome: Fix two centre ( low and high ) and expand in both directions for longer palindromes.
+
+For details on method 3, see http://www.geeksforgeeks.org/longest-palindromic-substring-set-2/
+
+
+
+
+***Method 4: Manacher's algorithm
+
+Time complexity: O(n)
+Space complexity: O(n)
+
+For details on method 4, see a series of articles at
+http://www.geeksforgeeks.org/manachers-algorithm-linear-time-longest-palindromic-substring-part-1/
+http://www.geeksforgeeks.org/manachers-algorithm-linear-time-longest-palindromic-substring-part-2/
+http://www.geeksforgeeks.org/manachers-algorithm-linear-time-longest-palindromic-substring-part-3-2/
+http://www.geeksforgeeks.org/manachers-algorithm-linear-time-longest-palindromic-substring-part-4/
+
+
+
+*** Method 5: Suffix Tree: linear time complexity
+
+For details on method 5, see http://www.geeksforgeeks.org/suffix-tree-application-6-longest-palindromic-substring/

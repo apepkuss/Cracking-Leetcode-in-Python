@@ -1,0 +1,29 @@
+
+
+Problem Statement:
+
+Given two strings str1 and str2, find the length of the longest common substring.
+
+Let m and n be the lengths of first and second strings respectively.
+
+
+*** DP SOLUTION
+
+Time complexity: O(m*n)
+Space complexity: O(m*n)
+
+LCS[i][j] indicates the length of the longest common substring of str1[0..i-1] and str2[0..j-1], where
+0 <= i <= m and 0 <= j <= n.
+
+1. LCS[i][j] = 0, if i==0 or j==0;
+2. LCS[i][j] = LCS[i-1][j-1], if str1[i-1] == str2[j-1];
+3. LCS[i][j] = 0, if str1[i-1] != str2[j-1]
+
+use a variable maxlen to store the current maximum length of common substring, then return maxlen.
+
+
+*** Suffix Trie Solution
+
+Time complexity: O(m+n)
+
+For details, see http://www.geeksforgeeks.org/suffix-tree-application-5-longest-common-substring-2/

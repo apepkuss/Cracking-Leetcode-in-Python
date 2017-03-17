@@ -1,0 +1,51 @@
+
+The problem statement: (leetcode 28)
+
+Given a text txt[0..n-1] and a pattern pat[0..m-1], write a function search(char pat[], char txt[]) that
+prints all occurrences of pat[] in txt[]. You may assume that n > m.
+
+
+
+There are two ways efficiently solve the problem:
+
+1. Preprocess pattern: KMP, Rabin-Karp, Finite Automata, Boyer-Moore
+
+2. Preprocess text: suffix trie
+
+The best possible time complexity achieved by first way (preprocessing pattern) is O(n), and by second way (
+preprocessing text) is O(m), where m and n are lengths of pattern and text respectively.
+
+*** Note that the second way does the searching only in O(m) time and it is PREFERRED when text doesn't change
+    very frequently and there are many search queries. Reference http://www.geeksforgeeks.org/pattern-searching-set-8-suffix-tree-introduction/
+
+
+
+
+*** BELOW IS A DISCUSSION ON SECOND WAY ***
+
+(http://www.geeksforgeeks.org/pattern-searching-using-trie-suffixes/)
+
+The idea is, every pattern that is present in text (or we can say every substring of text) must be a prefix
+of one of all possible suffixes. So if we build a Trie of all suffixes, we can find the pattern in O(m) time
+where m is pattern length.
+
+Step1: building a trie of all suffixes
+    1) Generate all suffixes of given text
+    2) Consider all suffixes as individual words and build a trie
+
+Step2: search a pattern in the built trie
+    1) starting from the first character of the pattern and the root of the trie, do following for each character
+    ...a) For the current character of pattern, if there is an edge from current node, follow the edge
+    ...b) If there is no edge, print 'pattern doesn't exist in text' and return.
+    2) If all characters of pattern have been processed, i.e., there is a path from root for characters of the
+       given pattern, then print all indexes where pattern is present. To store indexes, use a list with each node
+       that stores indexes of suffixes starting at the node.
+
+(for code, see leetcode28_SuffixTrie.py under string folder)
+
+
+
+
+
+
+

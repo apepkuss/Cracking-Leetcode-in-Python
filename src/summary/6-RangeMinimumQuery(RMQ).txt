@@ -1,0 +1,175 @@
+
+
+Range Minimum Query
+
+First 4 solutions are required. Solution 1 and 2 for dynamic array, while solution 3 and 4 for static array.
+
+
+Question:
+Given an array arr[0...n-1], we should be able to efficiently find the minimum value from index L (query start)
+to R (query end) where 0 <= L <= R <= n-1. Consider a situation where there are many range queries.
+
+
+If the array is DYNAMIC, following two algorithms are better
+
+Solution 1: Simple Solution O(n) time
+Run a loop from L to R, and find the minimum element in given range. This solution takes O(n) time to query in
+worst case.
+
+
+Solution 2: Segment Tree: O(n) time to build up segment tree, O(logn) time for range minimum query, O(logn) time
+            for updates; the size of segment tree is 2 * pow(2, ceil(log(n, 2))) - 1, so O(n) space.
+
+Representation of segment trees:
+    1) Leaf nodes are the elements of the input array
+    2) Each internal node represents some merging of leaf nodes. The merging may be different for different problems.
+       For RMQ problem, merging is minimum of leaves under a node.
+    3) Segment tree can be represented with an array. For each node at index i, its left child is at index 2*i+1,
+       its right child is at index 2*i+2, its parent node at index ceil((i-1)/2). The size of memory allocated for
+       segment tree will be 2 * pow(2, ceil(log(n,2))) - 1.
+    4) Segment tree is a FULL BINARY TREE. The height of a segment tree is floor(log(n, 2))
+
+Build up a segment tree:
+    def build_segtree(arr, segtree, ss, se, si): # O(n) time
+        """
+        arr: the input array
+        segtree: the segment tree to build
+        ss: the starting index of segment represented by current node, i.e. segtree[si]
+        se: the ending index of segment represented by current node, segtree[si]
+        si: the index of current node in segment tree
+        The initial invocation is build_segtree(arr, segtree, 0, n-1, 0)
+        """
+        # leaf node
+        if ss == se:
+            segtree[si] = arr[ss]
+            return arr[ss]
+
+        mid = (ss + (se - ss)) / 2
+        # build left subtree and get minimum on left sub segment
+        left = build_segtree(arr, segtree, ss, mid, 2*si+1)
+        # build right subtree and get minimum on right sub segment
+        right = build_segtree(arr, segtree, mid+1, se, 2*si+2)
+        # store minimum of current segment [ss, se] in root node si of current segment [ss,se]
+        segtree[si] = min(left, right)
+        return segtree[si]
+
+Query for minimum of given range:
+    def get_min(segtree, ss, se, qs, qe, si): # O(logn) time
+        """
+        ss: the starting index of segment represented by current node, i.e. segtree[si]
+        se: the ending index of segment represented by current node, segtree[si]
+        qs: the starting index of query range
+        qe: the end index of query range
+        si: the index of current node on segment tree
+        The initial invocation is get_min(segtree, 0, n-1, qs, qe, 0).
+        """
+        # case 1: query range is completely out of the range to search
+        if ss > qe or se < qs:
+            return sys.maxint
+
+        # case 2: query range completely covers the range to search
+        if qs <= ss <= se <= qe:
+            return segtree[si]
+
+        # case 3: query range partially covers the range to search
+        mid = (ss + (se - ss)) / 2
+        left = get_min(segtree, ss, mid, qe, qs, 2*si+1)
+        right = get_min(segtree, mid+1, se, qe, qs, 2*si+2)
+        return min(left, right)
+
+Update Segment Tree caused by a value update in arr:
+    def update_segtree(segtree, ss, se, i, diff, si): # O(logn) time
+        """
+        ss: the starting index of segment represented by current node, i.e. segtree[si]
+        se: the ending index of segment represented by current node, segtree[si]
+        i: the index of the element updated in arr
+        diff: the difference between new and old values of updated element,
+              which will be added to all nodes having i in range
+        si: the index of current node in segment tree
+        The initial invocation is update_segtree(segtree, 0, n-1, i, diff, 0)
+        """
+        # case 1: the input index is out of the range [ss, se] of segment tree
+        if i < ss or i > se: return
+
+        # case 2: the input index is in the range [ss, se]
+        segtree[si] += diff
+        if ss != se:
+            mid = (ss + (se - ss)) / 2
+            # update left sub-tree
+            update_segtree(segtree, ss, mid, i, diff, 2*si+1)
+            # update right sub-tree
+            update_segtree(segtree, mid+1, se, i, diff, 2*si+2)
+
+
+
+
+
+If the array is STATIC, we can optimize the query time with following algorithms
+
+Solution 3: Dynamic Programming: O(n^2) time to fill up memoization, O(1) time for range minimum query; O(n^2) space
+
+The memoization, T[i][j], means the minimum value in range of [i..j]
+
+Transition formula is
+
+    1) T[i][j] = T[i][j-1], if arr[j] > T[i][j-1]
+    2) T[i][j] = arr[j],    if arr[j] <= T[i][j-1]
+
+
+
+Solution 4: Square Root Decomposition: The time complexity of query is O(sqrt(n)). The overall time complexity is O(n).
+
+Square Root Decomposition is one of the most common query optimization technique. This technique helps us to reduce
+the time complexity by a factor of sqrt(n).
+
+The key concept of this technique is to decompose given array into small blocks of size sqrt(n). Therefore, the
+algorithm with Square Root Decomposition idea consists of two parts:
+
+Step1. Preprocessing (Decomposition): O(sqrt(n) * sqrt(n)) = O(n) time, O(sqrt(n)) space.
+    1) decompose the given array into several blocks of size sqrt(n), then
+    2) compute minimum of each block of size sqrt(n) and store the results
+
+Step2. Query: O(sqrt(n)) time
+    1) To query a range [L, R], we take minimum of all blocks that lie in this range; for left and right corner blocks
+       which may partially overlap with given range, we linearly scan them to find minimum.
+
+
+
+Solution 5: Sparse Table Algorithm: O(1) time for query, O(nlogn) space
+
+The idea is to precompute minimum of all subarrays of size 2^j, where j varies from 0 to logn. Like Solution 3, we
+make a lookup table. Here lookup[i][j] contains minimum of range starting from i and of size 2^j. For example,
+lookup[0][3] contains minimum of range [0,7].
+
+Step1. Preprocessing
+How to fill this lookup table? The idea is fill in bottom up manner using previously computed values. For example,
+to find minimum of range [0,7], we can use minimum of following two: minimum of range[0,3], minimum of range [4,7].
+The formula is
+
+# if lookup[0][3] <= lookup[4][7],
+# then lookup[0][7] = lookup[0][3]
+# else lookup[0][7] = lookup[4][7]
+
+IF lookup[i][j-1] <= lookup[i+pow(2,j-1)-1][j-1]
+THEN lookup[i][j] = lookup[i][j-1]
+ELSE lookup[i][j] = lookup[i+pow(2,j-1)][j-1]
+
+Step2. Query
+For any arbitrary range [L,R], we need to use ranges which are in powers of 2. The idea is to use closest power of 2.
+We always need to do at most comparison (compare minimum of two ranges which are powers of 2). One range starts with
+L and ends with L + 'closest-power-of-2'. The other range ends at R and starts with R - 'same-closest-power-of-2' + 1.
+For example, we compare minimum of two ranges [2,9] and [3,10]. The formula is
+
+# For [2,10], j = floor(log(10-2+1,2))=3
+j = floor(log(R-L+1, 2))
+
+# if lookup[0][7] <= lookup[3][10]
+# then RMQ(2,10) = lookup[0][7]
+# else RMQ(2,10) = lookup[3][10]
+
+IF lookup[L][j] <= lookup[R - pow(2,j) + 1][j]
+THEN RMQ(L,R) = lookup[L][J]
+ELSE RMQ(L,R) = lookup[i + pow(2,j-1) -1][j-1]
+
+
+

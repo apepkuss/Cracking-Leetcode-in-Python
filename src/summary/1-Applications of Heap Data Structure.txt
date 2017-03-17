@@ -1,0 +1,7 @@
+Heap Data Structure is generally taught with Heapsort. Heapsort algorithm has limited uses because Quicksort is better in practice. Nevertheless, the Heap data structure itself is enormously used. Following are some uses other than Heapsort.
+
+1. Priority Queues: Priority queues can be efficiently implemented using Binary Heap because it supports insert(), delete() and extractmax(), decreaseKey() operations in O(logn) time. Binomoial Heap and Fibonacci Heap are variations of Binary Heap. These variations perform union also in O(logn) time which is a O(n) operation in Binary Heap. Heap Implemented priority queues are used in Graph algorithms like Prim’s Algorithm (minimum spanning tree) and Dijkstra’s algorithm (shortest path tree).
+
+2. Order statistics: The Heap data structure can be used to efficiently find the kth smallest (or largest) element in an array. See method 4 and 6 in "2-klargest_ksmallest" for details.
+
+In statistics, the kth order statistic of a statistical sample is equal to its kth-smallest value.[1] Together with rank statistics, order statistics are among the most fundamental tools in non-parametric statistics and inference. Important special cases of the order statistics are the minimum and maximum value of a sample, and (with some qualifications discussed below) the sample median and other sample quantiles.

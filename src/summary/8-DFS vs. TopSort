@@ -1,0 +1,43 @@
+
+In the discussion below, the graph is represented as a adjacent list
+
+1. DFS:
+
+    def DFS(self, u):
+        visited = [False] * V
+        for u in range(V):
+            if visited[u] == False:
+                self.DFSUtil(visited, u)
+
+    def DFSUtil(self, visited, u):
+        visited[u] = True
+
+        print u
+
+        # traverse adjacent vertices of u
+        for v in self.graph[u]:
+            self.DFSUtil(visited, v)
+
+
+
+2. TopSort: Basically, this alglrithm is modified DFS algorithm with additional stack.
+
+    def TopSort(self, u):
+        visited = [False] * V
+        stack = []
+        for u in range(V):
+            if visited[u] == False:
+                self.TopSortUtil(visited, u, stack)
+
+        while stack:
+            print stack.pop()
+
+    def TopSortUtil(self, visited, u, stack):
+        visited[u] = True
+
+        # traverse adjacent vertices of u
+        for v in self.graph[u]:
+            if visited[v] == False:
+                self.TopSortUtil(visited, v, stack)
+
+        stack.append(u)

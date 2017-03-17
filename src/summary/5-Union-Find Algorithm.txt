@@ -1,0 +1,62 @@
+
+
+A disjoint-set data structure is a data structure that keeps track of a set of elements partitioned into a number of
+disjoint (non-overlapping) subsets. A union-find algorithm is an algorithm that performs two useful operations on such
+a data structure:
+
+FIND: determine which subset a particular element is in. This can be used for determining if two elements are in the
+      same subset.
+
+UNION: join two subsets into a single subset.
+
+
+Example:
+
+Union-Find algorithm can be used to check whether an undirected graph contains cycle or not. This method assumes that
+graph doesn't contain self-loops.
+
+We can keep track of the subsets in an array, lets call it parent.
+
+def isCyclic(graph):
+    """An undirected graph is stored in an adjacent list"""
+
+    parent = [i for i in range(n)]  # n is the number of vertex
+
+    for u in graph:
+        for v in graph[u]:
+            if union(u, v, parent):
+                return True
+    return False
+
+def union(u, v, parent):
+    """do union of two subsets"""
+    uu = find_parent(u, parent)
+    vv = find_parent(v, parent)
+
+    # cycle exists if uu==vv
+    if uu == vv:
+        return True
+
+    parent[uu] = vv
+    return False
+
+def find_parent(u, parent):
+    """find the subset of an element u"""
+    if parent[u] != parent[parent[u]]
+        parent[u] = find_parent(parent[u], parent)
+    return parent[u]
+
+
+
+OPTIMIZATION: optimize UNION with Union-By-Rank technique, while FIND with Path Compresson technique. These two
+techniques compensate each other. The time complexity for each can reduce from O(n) to O(logn).
+
+Uion-By-Rank: the idea is to always attach smaller depth tree under the root of the deeper tree. The term rank is
+              preferred instead of depth or height because if path compression technique is used, the the rank is
+              not always equal to height.
+
+Path Compression: the idea is to flatten the tree when find() is called. When find() is called for an element x,
+                  root of the tree is returned. Therefore, the idea of the technique is to make the found root as
+                  parent of element x so that we don't have to traverse all intermediate nodes again.
+
+Reference: http://www.geeksforgeeks.org/union-find-algorithm-set-2-union-by-rank/
