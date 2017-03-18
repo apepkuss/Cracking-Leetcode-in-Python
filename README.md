@@ -1,4 +1,4 @@
-# Cracking leetcode
+# Cracking Algorithm Questions
 
 The motivation of this project is to practice algorithm questions. The majority of algorithm questions discussed and presented here are from leetcode.com, which is one of the most popular technical interview training website.
 
