@@ -30,14 +30,11 @@ class Solution(object):
         # initialize the matrix
         for x in xrange(n):
             dp[x][x] = True
-        for x in xrange(n - 1):
-            if s[x] == s[x + 1]:
-                dp[x][x + 1] = True
 
-        maxlength = 0
+        maxlength = 1
         idx = 0
         # populate the remaining cells of the matrix
-        for length in xrange(3, n + 1):
+        for length in xrange(2, n + 1):
             for x in xrange(n - length + 1):
                 y = x + length - 1
                 if s[x] == s[y] and dp[x + 1][y - 1]:
@@ -65,10 +62,12 @@ class Solution(object):
         if n == 0: return ""
         maxstring = s[0]
         for x in xrange(1, n):
+            # centered at the whitespace between s[x-1] and s[x]
             substring = expandAroundCenter(s, x - 1, x)
             if len(maxstring) < len(substring):
                 maxstring = substring
 
+            # centered at the character s[x]
             substring = expandAroundCenter(s, x, x)
             if len(maxstring) < len(substring):
                 maxstring = substring
