@@ -74,50 +74,53 @@ class Solution(object):
         return maxstring
 
 
-    # 方法3：Manacher's algorithm. 该方法利用回文的对称特性避免不必要的计算。
+    # 方法3：Manacher's algorithm. 该方法利用回文的对称特性避免重复计算。
     def longestPalindrome_manacher(self, s):  # RT: O(n), Space: O(n)
-        def preprocess(s):
-            n = len(s)
-            if n == 0: return "^$"
-            res = "^"
-            for x in xrange(n):
-                res += "#" + s[x]
-            res += "#$"
-            return res
 
-        T = preprocess(s)
-        n = len(T)
-        # dp[x] equals to the length of the palindrome centered at T[x]
-        dp = [0 for _ in xrange(n)]
-        center, rightEdge = 0, 0
-        for x in xrange(1, n - 1):
-            # x'=center-(x-center)
-            x_mirror = 2 * center - x
+        # simulate inserting $ symbols between each pair of characters and the head and tail position of input s
+        n = len(s) * 2 + 1
 
-            if rightEdge > x:
-                dp[x] = min(rightEdge - x, dp[x_mirror])
-            else:
-                dp[x] = 0
+        # dp[i] denotes the length of the longest palindromic substring centered at s[i]
+        dp = [0] * n
+        dp[0] = 0
+        dp[1] = 1
 
-            # attempt to expand palindrome centers at x
-            while T[x + dp[x] + 1] == T[x - dp[x] - 1]:
-                dp[x] += 1
+        # the index of current center character
+        center = 1
+        # the right edge of longest palindromic substring centered at index of center
+        rightEdge = 2
 
-            # If palindrome centered at x expand past rightEdge,
-            # update center and rightEdge based on expanded palindrome
-            if x + dp[x] > rightEdge:
-                center = x
-                rightEdge = x + dp[x]
+        maxLPSLength = 0
+        maxLPSCenter = 0
 
-        # find the maximum element in dp
-        maxlen = 0
-        centeridx = 0
-        for x in xrange(1, n - 1):
-            if maxlen < dp[x]:
-                maxlen = dp[x]
-                centeridx = x
-        start = (centeridx - maxlen - 1) / 2
-        return s[start:start + maxlen]
+        # i denotes current right edge
+        for i in xrange(2, n):
+            # j denotes current left edge
+            j = center - (center - i)
+
+            # if current right edge i is within center right edge rightEdge
+            if rightEdge > i:
+                dp[i] = min(rightEdge - i, dp[j])
+
+            # attempt to expand palindrome centers at i
+            while 0 < (i - dp[i]) and (i + dp[i]) < n and \
+                    (((i + dp[i] + 1) % 2 == 0) or (s[i + dp[i] + 1] == s[i - (dp[i] + 1)])):
+                dp[i] += 1
+
+            # track maxLPSLength
+            if dp[i] > maxLPSLength:
+                maxLPSLength = dp[i]
+                maxLPSCenter = i
+
+            # If current LPS centered at i expands past rightEdge,
+            # update center and rightEdge based on current LPS
+            if i + dp[i] > rightEdge:
+                center = i
+                rightEdge = i + dp[i]
+
+        start = (maxLPSCenter - maxLPSLength) / 2
+        end = start + maxLPSLength - 1
+        return s[start : end+1]
 
 
 
