@@ -67,6 +67,8 @@ class Solution(object):
 
     def LPS_manacher(self, s):  # RT: O(n), Space: O(n)
 
+        if len(s) < 2: return s
+
         # simulate inserting $ symbols between each pair of characters and the head and tail position of input s
         n = len(s) * 2 + 1
 
@@ -84,8 +86,8 @@ class Solution(object):
         maxLPSCenter = 0
 
         # i denotes current right edge
-        for i in xrange(2, n):
-            # j denotes current left edge
+        for i in xrange(2, n-1):
+            # j denotes mirror position of i
             j = center - (i - center)
 
             # if current right edge i is within center right edge rightEdge

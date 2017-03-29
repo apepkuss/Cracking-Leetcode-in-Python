@@ -77,6 +77,8 @@ class Solution(object):
     # 方法3：Manacher's algorithm. 该方法利用回文的对称特性避免重复计算。
     def longestPalindrome_manacher(self, s):  # RT: O(n), Space: O(n)
 
+        if len(s) < 2: return s
+
         # simulate inserting $ symbols between each pair of characters and the head and tail position of input s
         n = len(s) * 2 + 1
 
@@ -104,7 +106,7 @@ class Solution(object):
 
             # attempt to expand palindrome centers at i
             while 0 < (i - dp[i]) and (i + dp[i]) < n-1 and \
-                    (((i + dp[i] + 1) % 2 == 0) or (s[i + dp[i] + 1] == s[i - (dp[i] + 1)])):
+                    (((i + dp[i] + 1) % 2 == 0) or (s[(i + dp[i] + 1)/2] == s[(i - (dp[i] + 1))/2])):
                 dp[i] += 1
 
             # track maxLPSLength
