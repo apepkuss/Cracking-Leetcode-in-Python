@@ -96,14 +96,14 @@ class Solution(object):
         # i denotes current right edge
         for i in xrange(2, n):
             # j denotes current left edge
-            j = center - (center - i)
+            j = center - (i - center)
 
             # if current right edge i is within center right edge rightEdge
             if rightEdge > i:
                 dp[i] = min(rightEdge - i, dp[j])
 
             # attempt to expand palindrome centers at i
-            while 0 < (i - dp[i]) and (i + dp[i]) < n and \
+            while 0 < (i - dp[i]) and (i + dp[i]) < n-1 and \
                     (((i + dp[i] + 1) % 2 == 0) or (s[i + dp[i] + 1] == s[i - (dp[i] + 1)])):
                 dp[i] += 1
 
