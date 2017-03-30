@@ -20,7 +20,12 @@ class Solution(object):
         :rtype: int
         """
         m = len(triangle)
-        dp = triangle[m-1]
+
+        dp = [0] * m
+        for i in range(m):
+            dp[i] = triangle[m-1][i]
+
+        # bottom-up way to computer the path sum level by level
         for x in xrange(m-2, -1, -1):
             for y in xrange(x+1):
                 dp[y] = min(dp[y], dp[y+1]) + triangle[x][y]
