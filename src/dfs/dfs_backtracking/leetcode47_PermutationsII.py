@@ -24,7 +24,7 @@ class Solution(object):
         n = len(nums)
         if n > 0:
             nums.sort()  # to make sure we can skip the same value
-            used = [False] * n # to indicate if a value is used or not
+            used = [False] * n  # to indicate if a value is used or not
             self.backtrack(nums, [], used, res)
         return res
 
@@ -37,7 +37,7 @@ class Solution(object):
                 # if the i-th element is not used, and the i-th and (i-1)-th elements
                 # are same, but the (i-1)-th element is also unused, then skip the
                 # i-th element
-                if used[i] or ( i >0 and nums[ i -1] == nums[i] and used[ i -1] == False):
+                if used[i] or (i > 0 and nums[i - 1] == nums[i] and used[i - 1] == False):
                     continue
 
                 used[i] = True
