@@ -50,6 +50,8 @@ class Solution(object):
 
         for i in range(2, n + 1):
             # compute the numbers with i unique digits
+            # for any i, the numbers with i unique digits can be computed
+            # by the formula 9 * 9 * 8 * ... * (9-k+2)
             curr = 9
             for k in range(2, i + 1):
                 curr *= 9 - (k - 2)
