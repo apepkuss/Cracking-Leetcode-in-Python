@@ -34,13 +34,13 @@ class Solution(object):
         # table[i][j] indicates longest palindrome subsequence of s[i..j]
         table = [[0] * n for _ in range(n)]
 
-        for i in range(n):
-            table[i][i] = 1
-
-        for l in range(2, n + 1):
+        for l in range(1, n + 1):
             for i in range(n - l + 1):
                 j = i + l - 1
-                if s[i] == s[j]:
+
+                if i == j:
+                    table[i][j] = 1
+                elif s[i] == s[j]:
                     table[i][j] = table[i + 1][j - 1] + 2
                 else:
                     table[i][j] = max(table[i][j - 1], table[i + 1][j])
