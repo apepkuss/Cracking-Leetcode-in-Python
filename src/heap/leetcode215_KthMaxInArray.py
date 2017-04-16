@@ -103,7 +103,7 @@ class Solutions(object):
         return value, arr
 
 
-    # Method 5: use built-in heapq to build up a min heap, then pop out the k-th largest element
+    # Method 4: use built-in heapq to build up a min heap, then pop out the k-th largest element
     def findKthLargest(self, nums, k):
         """
         :type nums: List[int]
