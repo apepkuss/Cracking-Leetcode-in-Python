@@ -12,7 +12,8 @@ class Solutions(object):
     @classmethod
     def find_kthMaxValue_ByQuickSelect(cls, arr, k): # O(n) time
         n = len(arr)
-        if n==1: return arr[0]
+        if n == 1: return arr[0]
+
         # quick-select algorithm returns the k-th smallest element, so we need to
         # set the fourth argument as n-k, meaning it returns the (n-k) smallest
         # element, namely the k-th largest element in the array.
@@ -52,7 +53,6 @@ class Solutions(object):
     def find_kthMaxValue_BySort(cls, arr, k): # O(nlogn) time
         arr.sort()
         return arr[k-1]
-
 
 
 
