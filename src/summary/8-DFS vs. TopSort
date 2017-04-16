@@ -20,24 +20,48 @@ In the discussion below, the graph is represented as a adjacent list
 
 
 
-2. TopSort: Basically, this alglrithm is modified DFS algorithm with additional stack.
+2. TopSort: Basically, there are two algorithms that can achieve top sort: one is Tarjan's algorithm, one is
+            Kahn's algorithm. Tarjan's algorithm is based on DFS idea.
 
-    def TopSort(self, u):
+
+    # graph is represented as an adjacent list
+    # V is number of vertices in graph
+    #
+    def TopSort_Tarjan(self, graph, V):
+        # permanent mark
         visited = [False] * V
-        stack = []
+        # temporary mark
+        onpath = [False] * V
+        # a valid sort
+        after_sort = []
+
         for u in range(V):
-            if visited[u] == False:
-                self.TopSortUtil(visited, u, stack)
+            if not visited[u] and not self.TopSortUtil(u, graph, visited, onpath, after_sort):
+                return False  # graph has cycle
 
-        while stack:
-            print stack.pop()
+        # print the valid sort
+        print after_sort
 
-    def TopSortUtil(self, visited, u, stack):
-        visited[u] = True
+        return True
+
+    def TopSortUtil(self, u, graph, visited, onpath, after_sort):
+        # if u is marked temporarily, it means graph has cycle
+        if onpath[u]:
+            return False
+
+        onpath[u] = True
 
         # traverse adjacent vertices of u
         for v in self.graph[u]:
-            if visited[v] == False:
-                self.TopSortUtil(visited, v, stack)
+            if not visited[v] and not self.TopSortUtil(v, graph, visited, onpath, after_sort):
+                return False
 
-        stack.append(u)
+        # mark u permanently
+        visited[u] = True
+        # unmark u temporarily
+        onpath[u] = False
+
+        # add u to the head of after_sort list
+        after_sort.insert(0, u)
+
+        return True

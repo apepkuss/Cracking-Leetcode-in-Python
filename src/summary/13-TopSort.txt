@@ -1,0 +1,46 @@
+
+
+There are two TopSort algorithms: Tarjan's vs. Kahn's
+
+1. Tarjan's algorithm is based on DFS idea.
+
+    L <- Empty list that will contain the sorted nodes
+    while there are unvisited nodes:
+        select an unvisited node u
+        visit(u)
+
+    function visit(u):
+        if u has a temporary mark, then graph has cycle and stop
+        if u has not visited:
+            mark n temporarily
+            for each node v of u->v:
+                visit(v)
+            mark u permanently
+            unmark u temporarily
+            add u to the head of L
+
+
+
+2. Kahn's algorithm is based on BFS idea.
+
+    L <- Empty list that will contain the sorted nodes
+    S <- Set of all nodes with no incoming edges
+    indegree <- A list that saves the indegrees of each node
+    count <- the number of visited nodes
+
+    while S is non-empty:
+
+        remove a node u from S
+        count += 1
+
+        add u to tail of L
+
+        for each node v of u->v:
+            indegree[v] -= 1
+            if indegree[v] == 0:
+                insert v into S
+
+    if count != the number of vertices in graph:
+        graph has cycle
+    else:
+        return L
