@@ -1,7 +1,9 @@
 
 class Solution(object):
     """
-
+    @ Amazon, Linkedin, Apple, Facebook, Microsoft
+    
+    Array
 
     Given an array of n integers where n > 1, nums, return an array output such that output[i] is equal to
     the product of all the elements of nums except nums[i].
@@ -29,12 +31,14 @@ class Solution(object):
 
         product = 1
         # first iteration to get the product of first i elements
+        # res[i] denotes the product of first i elements except the element at index of i
         for x in xrange(n-1):
             product *= nums[x]
             res[x+1] *= product
 
         product = 1
         # second iteration to get the product of both first i elements and the elements from i+1 to the end.
+        # res[i] denotes the product of all elements except the element at index of i
         for x in xrange(n-1, 0, -1):
             product *= nums[x]
             res[x-1] *= product
