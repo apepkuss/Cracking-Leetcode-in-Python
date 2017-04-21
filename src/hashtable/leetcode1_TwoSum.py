@@ -18,10 +18,14 @@ class Solution:
     """
     # @return a tuple, (index1, index2)
     def twoSum(self, num, target): # O(n) time, O(n) space
-        dict = {} # key is the element in num, value is the index of the element in num.
+
+        # key is the element in num, value is the index of the element in num.
+        adict = {}
+
         for i in range(len(num)):
             diff = target - num[i]
-            if diff in dict:
-                return dict[diff], i
-            dict[num[i]] = i
+            if diff in adict:
+                return adict[diff], i
+            adict[num[i]] = i
+
         return -1, -1
