@@ -18,6 +18,10 @@ class Solution(object):
     Supposed the linked list is 1 -> 2 -> 3 -> 4 and you are given the third node with value 3, the linked list 
     should become 1 -> 2 -> 4 after calling your function.
     """
+
+    # The interesting part of this problem is the root node is not given, but the target node is given. Therefore,
+    # node deletion operation can be implemented by using the value of the successor node of target node to replace
+    # the value of target node, then repeat this process on all other successor nodes.
     def deleteNode(self, node):
         """
         :type node: ListNode
