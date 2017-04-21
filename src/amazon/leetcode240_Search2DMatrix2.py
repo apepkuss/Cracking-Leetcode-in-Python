@@ -3,7 +3,7 @@ class Solution(object):
     """
     @ Amazon, Google, Apple
 
-    Binary Seach, Divide and Conquer
+    Binary Search, Divide and Conquer
 
     Write an efficient algorithm that searches for a value in an m x n matrix. This matrix has the following properties:
 
@@ -68,9 +68,46 @@ class Solution(object):
         m, n = len(matrix), len(matrix[0])
         return helper(matrix, 0, m-1, 0, n-1, target)
 
+    def searchMatrix(self, matrix, target):  # RT: O(n^1.58)
+        """
+        :type matrix: List[List[int]]
+        :type target: int
+        :rtype: bool
+        """
+        if not matrix or len(matrix) == 0:
+            return False
+        m, n = len(matrix), len(matrix[0])
+        return self.search(target, matrix, (0, 0), (m - 1, n - 1))
+
+    def search(self, target, matrix, left, right):
+        # invalid boundary index
+        if left[0] > right[0] or left[1] > right[1]:
+            return False
+
+        # base case
+        if left == right:
+            if matrix[left[0]][left[1]] == target:
+                return True
+            else:
+                return False
+
+        # get mid index
+        mid = (left[0] + (right[0] - left[0]) / 2, left[1] + (right[1] - left[1]) / 2)
+        value = matrix[mid[0]][mid[1]]
+        if target < value:
+            return self.search(target, matrix, left, (mid[0] - 1, mid[1] - 1)) or \
+                   self.search(target, matrix, (left[0], mid[1]), (mid[0] - 1, right[1])) or \
+                   self.search(target, matrix, (mid[0], left[1]), (right[0], mid[1] - 1))
+        elif target > value:
+            return self.search(target, matrix, (left[0], mid[1] + 1), (mid[0], right[1])) or \
+                   self.search(target, matrix, (mid[0] + 1, left[1]), (right[0], mid[1])) or \
+                   self.search(target, matrix, (mid[0] + 1, mid[1] + 1), right)
+        else:
+            return True
+
 
 if __name__ == "__main__":
     matrix = [[1,2,3,4,5],[6,7,8,9,10],[11,12,13,14,15],[16,17,18,19,20],[21,22,23,24,25]]
-    target = 19
-    res = Solution().searchMatrix_DivideConquer(matrix, target)
+    target = 5
+    res = Solution().searchMatrix(matrix, target)
     print res
