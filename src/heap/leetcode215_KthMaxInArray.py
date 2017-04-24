@@ -4,16 +4,23 @@ import sys
 
 class Solutions(object):
     """
-    Find the kth largest element in an unsorted array.
-    Note that it is the kth largest element in the sorted order, not the kth distinct element.
+    @ Facebook, Amazon, Microsoft, Apple, Bloomberg, PocketGems
+    
+    Heap, Divide and Conquer
+
+    Find the kth largest element in an unsorted array. Note that it is the kth largest element in the sorted order, 
+    not the kth distinct element.
+
+    For example, Given [3,2,1,5,6,4] and k = 2, return 5.
+
+    Note: You may assume k is always valid, 1 <= k <= array's length.
     """
 
     # Method 1: quick-select algorithm in O(n) time
     @classmethod
     def find_kthMaxValue_ByQuickSelect(cls, arr, k): # O(n) time
         n = len(arr)
-        if n == 1: return arr[0]
-
+        if n==1: return arr[0]
         # quick-select algorithm returns the k-th smallest element, so we need to
         # set the fourth argument as n-k, meaning it returns the (n-k) smallest
         # element, namely the k-th largest element in the array.
@@ -53,6 +60,7 @@ class Solutions(object):
     def find_kthMaxValue_BySort(cls, arr, k): # O(nlogn) time
         arr.sort()
         return arr[k-1]
+
 
 
 
@@ -103,7 +111,8 @@ class Solutions(object):
         return value, arr
 
 
-    # Method 4: use built-in heapq to build up a min heap, then pop out the k-th largest element
+
+    # Method 5: use built-in heapq to build up a min heap, then pop out the k-th largest element
     def findKthLargest(self, nums, k):
         """
         :type nums: List[int]
