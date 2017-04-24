@@ -11,6 +11,8 @@ class TreeNode(object):
 class Solution(object):
     """
     @ Linkedin, Facebook, Amazon, Microsoft, Apple, Bloomberg
+    
+    Tree, BFS
 
     Given a binary tree, return the level order traversal of its nodes' values. (ie, from left to right, level by level).
 
@@ -28,25 +30,27 @@ class Solution(object):
       [15,7]
     ]
     """
+
     def levelOrder(self, root):
         """
         :type root: TreeNode
         :rtype: List[List[int]]
         """
         res = []
-        if root is None:
+        if not root:
             return res
+
         currLevel = [root]
-        while len(currLevel) > 0:
+        while currLevel:
             nextLevel = []
             values = []
-            for elem in currLevel:
-                values.append(elem.val)
-                if elem.left:
-                    nextLevel.append(elem.left)
-                if elem.right:
-                    nextLevel.append(elem.right)
-            if len(values) > 0:
-                res.append(values)
+            for node in currLevel:
+                values.append(node.val)
+                if node.left:
+                    nextLevel.append(node.left)
+                if node.right:
+                    nextLevel.append(node.right)
+            res.append(values)
             currLevel = nextLevel
+
         return res
