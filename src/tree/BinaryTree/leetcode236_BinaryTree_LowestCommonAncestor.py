@@ -23,9 +23,14 @@ class Solution(object):
         :type q: TreeNode
         :rtype: TreeNode
         """
-        if root is None or root == p or root == q:
+        if not root:
+            return None
+
+        # find p or q
+        if root == p or root == q:
             return root
 
+        # find p and q on left and right subtrees
         left = self.lowestCommonAncestor_recursive(root.left, p, q)
         right = self.lowestCommonAncestor_recursive(root.right, p, q)
 
@@ -48,7 +53,7 @@ class Solution(object):
 
         # find p and q by BST, as the purpose is to find LOWEST common ancestor
         while p not in parent or q not in parent:
-            node = queue.pop()
+            node = queue.pop(0)
             if node.left:
                 parent[node.left] = node
                 queue.append(node.left)
