@@ -2,6 +2,8 @@
 class Solution(object):
     """
     @ Google, Zenefits, Microsoft, Apple, Yahoo, Dropbox, Adobe
+    
+    Binary Search, Array, Divide and Conquer
 
     There are two sorted arrays nums1 and nums2 of size m and n respectively. Find the median of the two sorted arrays.
     The overall run time complexity should be O(Log(m+n)).
@@ -93,8 +95,8 @@ class Solution(object):
         n1 = min(k/2, len(nums1))
         n2 = k - n1
         if nums1[n1-1] < nums2[n2-1]:
-            return self.find_kth(nums1[n1:], nums2, k-n1)
+            return self.find_kth(nums1[n1:], nums2[:n2], k-n1)
         elif nums1[n1-1] > nums2[n2-1]:
-            return self.find_kth(nums1, nums2[n2:], k-n2)
+            return self.find_kth(nums1[:n1], nums2[n2:], k-n2)
         else:
             return nums1[n1-1]
