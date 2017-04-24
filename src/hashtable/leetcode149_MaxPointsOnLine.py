@@ -15,6 +15,7 @@ class Solution(object):
     
     Given n points on a 2D plane, find the maximum number of points that lie on the same straight line.
     """
+
     def maxPoints(self, points):
         """
         :type points: List[Point]
@@ -32,12 +33,12 @@ class Solution(object):
                 x = points[i].x - points[j].x
                 y = points[i].y - points[j].y
 
-                # points[i] overlaps with point[j]
+                # count overlapped points
                 if x == 0 and y == 0:
                     overlap += 1
                     continue
 
-                # compute GCD
+                # compute GCD of x and y
                 gcd = self.get_gcd(x, y)
                 if gcd != 0 and gcd != 1:
                     x /= gcd
@@ -49,9 +50,13 @@ class Solution(object):
                 else:
                     adict[key] = 1
 
+                # get the maximum number of points on the straight line which
+                # contains point[i]
                 count = max(count, adict[key])
 
+            # get current maximum number of points on the same straight line
             res = max(res, count + overlap + 1)
+
         return res
 
     def get_gcd(self, x, y):
