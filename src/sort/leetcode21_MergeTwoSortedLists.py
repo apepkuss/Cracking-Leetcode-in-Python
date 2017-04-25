@@ -1,4 +1,5 @@
 
+
 # Definition for singly-linked list.
 class ListNode(object):
     def __init__(self, x):
@@ -7,15 +8,23 @@ class ListNode(object):
 
 
 class Solution(object):
+    """
+    @ Amazon, Linkedin, Apple, Microsoft
+    
+    Linked List
+    
+    Merge two sorted linked lists and return it as a new list. The new list 
+    should be made by splicing together the nodes of the first two lists.
+    """
     def mergeTwoLists(self, l1, l2):
         """
         :type l1: ListNode
         :type l2: ListNode
         :rtype: ListNode
         """
-        if l1 == None:
+        if not l1:
             return l2
-        elif l2 == None:
+        if not l2:
             return l1
 
         dummy = ListNode(0)

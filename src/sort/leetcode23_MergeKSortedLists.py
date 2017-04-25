@@ -1,11 +1,11 @@
 
-import heapq
 
 # Definition for singly-linked list.
 class ListNode(object):
     def __init__(self, x):
         self.val = x
         self.next = None
+
 
 class Solution(object):
     """
@@ -15,7 +15,7 @@ class Solution(object):
 
     Merge k sorted linked lists and return it as one sorted list. Analyze and describe its complexity.
     """
-    def mergeKLists(self, lists): # use min heap
+    def mergeKLists_1(self, lists): # use min heap
         """
         :type lists: List[ListNode]
         :rtype: ListNode
@@ -24,6 +24,7 @@ class Solution(object):
         for alist in lists:
             if alist:
                 arr.append(alist)
+
         arr = self.buildMinHeap(arr)
         dummy = ListNode(0)
         p = dummy
@@ -81,3 +82,29 @@ class Solution(object):
         elif len(arr) > 0:
             arr = []
         return node, arr
+
+    def mergeKLists_2(self, lists):
+        """
+        :type lists: List[ListNode]
+        :rtype: ListNode
+        """
+        heap = []
+        for root in lists:
+            if root:
+                heap.append((root.val, root))
+
+        import heapq
+        heapq.heapify(heap)
+
+        dummy = ListNode(0)
+        tail = dummy
+        while heap:
+            _, node = heapq.heappop(heap)
+            tail.next = node
+            tail = tail.next
+
+            # put next neighbor of node into heap
+            if node.next:
+                heapq.heappush((node.next.val, node.next))
+
+        return dummy.next
