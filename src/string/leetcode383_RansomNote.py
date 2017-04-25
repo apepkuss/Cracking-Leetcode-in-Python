@@ -27,8 +27,7 @@ class Solution(object):
         if m > n: return False
         if m == 0: return True
 
-        # use a dictionary to keep info of characters in ransomNote,
-        # as ransomNote has less characters than magazine
+        # keep info of characters in ransomNote, as ransomNote has less characters than magazine
         adict = {}
 
         for c in ransomNote:
