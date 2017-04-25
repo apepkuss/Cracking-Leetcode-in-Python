@@ -25,6 +25,9 @@ class Solution(object):
     how a graph is represented. You may assume that there are no duplicate edges in the input prerequisites.
     """
 
+    # Note: Union-Find approach is designed to check whether an UNDIRECTED graph contains circle or not. For a
+    # directed graph, topological sorting, including Tarjan's and Kahn's algorithms, can be used to detect circle.
+
     # Method 1: Tarjan's algorithm, which is based on dfs idea
     def canFinish_Tarjan(self, numCourses, prerequisites):
         """
