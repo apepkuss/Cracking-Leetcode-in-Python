@@ -95,6 +95,8 @@ class Solution(object):
         while queue:
             u = queue.pop(0)
             count += 1
+
+            # update in-degrees of u's neighbors
             for v in graph[u]:
                 indegree[v] -= 1
                 if indegree[v] == 0:
