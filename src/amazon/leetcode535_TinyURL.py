@@ -35,7 +35,6 @@ class Codec:
                 self.code2url[code] = longUrl
         return 'http://tinyurl.com/' + self.url2code[longUrl]
 
-
     def decode(self, shortUrl):
         """Decodes a shortened URL to its original URL.
 
