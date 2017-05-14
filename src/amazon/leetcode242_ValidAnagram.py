@@ -17,35 +17,33 @@ class Solution(object):
     Follow up:
     What if the inputs contain unicode characters? How would you adapt your solution to such case?
     """
+
     def isAnagram(self, s, t):
         """
         :type s: str
         :type t: str
         :rtype: bool
         """
-        m, n = len(s), len(t)
+        if len(s) != len(t):
+            return False
 
-        # check if their length are same
-        if m != n: return False
-
-        # use hashtable to compute the number of each character in s and t
-        s_table = {}
-        t_table = {}
-
-        for i in range(len(s)):
-            if s[i] not in s_table:
-                s_table[s[i]] = 1
+        adict = {}
+        for c in s:
+            if c not in adict:
+                adict[c] = 1
             else:
-                s_table[s[i]] += 1
-            if t[i] not in t_table:
-                t_table[t[i]] = 1
-            else:
-                t_table[t[i]] += 1
+                adict[c] += 1
 
-        # check if s and t have same number of characters
-        for k, v in s_table.items():
-            if k not in t_table or v != t_table[k]:
+        for c in t:
+            if c not in adict:
                 return False
+            else:
+                adict[c] -= 1
+
+        for v in adict.values():
+            if v != 0:
+                return False
+
         return True
 
 
