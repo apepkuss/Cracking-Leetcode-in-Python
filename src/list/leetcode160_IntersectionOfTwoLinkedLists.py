@@ -29,44 +29,40 @@ class Solution(object):
     You may assume there are no cycles anywhere in the entire linked structure.
     Your code should preferably run in O(n) time and use only O(1) memory.
     """
+
     def getIntersectionNode(self, headA, headB):
         """
         :type head1, head1: ListNode
         :rtype: ListNode
         """
-        if not headA or not headB: return None
+        if not headA or not headB:
+            return None
 
-        p, q = headA, headB
-        while p and q:
-            # two linked lists have the same number of nodes
-            if p.val == q.val:
-                return p
-            p = p.next
-            q = q.next
+        la = 0  # length of listA
+        pa = headA
+        while pa:
+            la += 1
+            pa = pa.next
 
-        # if list A has less nodes
-        if not p:
-            p = headB
-            while p and q:
-                p = p.next
-                q = q.next
-            q = headA
+        lb = 0  # length of listB
+        pb = headB
+        while pb:
+            lb += 1
+            pb = pb.next
 
-        # if list B has less nodes
-        elif not q:
-            q = headA
-            while p and q:
-                p = p.next
-                q = q.next
-            p = headB
+        pa, pb = headA, headB
+        while la > lb:
+            la -= 1
+            pa = pa.next
+        while la < lb:
+            lb -= 1
+            pb = pb.next
 
-        while p and q:
-            if p.val == q.val:
-                return p
-            p = p.next
-            q = q.next
+        while pa != pb:
+            pa = pa.next
+            pb = pb.next
 
-        return None
+        return pa
 
 
 if __name__ == "__main__":
