@@ -18,23 +18,23 @@ class Solution(object):
     """
 
     # Solution based on iterative design
-    def reverseList_Iter(self, head):
+    def reverseList(self, head):
         """
         :type head: ListNode
         :rtype: ListNode
         """
-        if head is None or head.next is None:
+        if not head or not head.next:
             return head
 
         pre, curr = head, head.next
         while curr:
-            nxt = curr.next
+            node = curr.next
             curr.next = pre
             pre = curr
-            curr = nxt
+            curr = node
+
         head.next = None
-        head = pre
-        return head
+        return pre
 
     # Solution based on recursive design
     def reverseList_DFS(self, head):
@@ -59,3 +59,4 @@ class Solution(object):
         newtail = head
 
         return newhead, newtail
+
