@@ -42,33 +42,7 @@ class Solution(object):
     # The third method is to use hash table, which can be solve the problem in O(n) time, but needs O(n) space.
     #
 
-    def findPairs_simple(self, nums, k):  # TLE: O(n^2) time
-        """
-        :type nums: List[int]
-        :type k: int
-        :rtype: int
-        """
-        pairs = []
-        if not nums or k < 0:
-            return len(pairs)
-
-        # sort nums for avoiding duplicated pairs like (i,j) and (j,i)
-        nums.sort()
-
-        minval, maxval = nums[0], nums[-1]
-        if k > abs(minval - maxval):
-            return len(pairs)
-
-        n = len(nums)
-        for i in range(n-1):
-            for j in range(i+1, n):
-                if k == abs(nums[i] - nums[j]) and (nums[i], nums[j]) not in pairs:
-                    pairs.append((nums[i], nums[j]))
-
-        return len(pairs)
-
-
-    def findPairs_twoPointers(self, nums, k):
+    def findPairs_twoPointers(self, nums, k):  # O(nlogn) time, O(1) space
         """
         :type nums: List[int]
         :type k: int
@@ -97,8 +71,7 @@ class Solution(object):
 
         return count
 
-
-    def findPairs_hashtable(self, nums, k):
+    def findPairs_hashtable(self, nums, k):  # O(n) time, O(n) space
         """
         :type nums: List[int]
         :type k: int
@@ -127,10 +100,8 @@ class Solution(object):
         return count
 
 
-
-
 if __name__ == "__main__":
     nums = [1, 3, 1, 5, 4]
     k = 0
-    res = Solution().findPairs(nums, k)
+    res = Solution().findPairs_hashtable(nums, k)
     print res
