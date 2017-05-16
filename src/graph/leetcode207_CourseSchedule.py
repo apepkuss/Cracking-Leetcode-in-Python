@@ -79,7 +79,7 @@ class Solution(object):
         :type prerequisites: List[List[int]]
         :rtype: bool
         """
-        # adjacent list
+        # build up a graph represented as an adjacent list
         graph = self.build_graph(numCourses)
 
         # record indegrees of each node in graph
@@ -108,6 +108,10 @@ class Solution(object):
         return count == numCourses
 
     def build_graph(self, numCourses):
+        """
+        Build up a directed graph represented as adjacent list
+        :param numCourses: graph nodes 
+        """
         graph = [[] for _ in range(numCourses)]
         for elem in prerequisites:
             v, u = elem[0], elem[1]
