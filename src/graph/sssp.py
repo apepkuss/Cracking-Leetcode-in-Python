@@ -4,6 +4,10 @@ class SingleSourceShortestPath(object):
 
     @classmethod
     def dijkstra(cls, graph, source): # O(E+VlogV) time, if store the vertices in a Fibonacci heap
+        """
+        :param graph: an adjacent matrix
+        :param source: the starting vertex
+        """
 
         # n indicates the number of vertices in the graph
         n = len(graph)
