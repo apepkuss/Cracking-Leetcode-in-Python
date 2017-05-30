@@ -11,6 +11,7 @@ class SingleSourceShortestPath(object):
         # initialize the dist and sptSet arrays
         # dist[i] indicates the distance from source node to node i.
         dist = [sys.maxint] * n
+
         # sptSet[i] indicates if node i is in the shortest path tree or not.
         sptSet = [False] * n
 
