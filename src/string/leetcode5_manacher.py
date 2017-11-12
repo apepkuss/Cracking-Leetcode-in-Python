@@ -6,7 +6,7 @@ class Solution(object):
     def longestPalindrome_manacher(self, s):  # RT: O(n), Space: O(n)
         # preprocess the target string
         T = Solution.preprocess(s)
-        # compute the
+        # compute a dp array, dp[i] means the longest substring centered at i
         dp = Solution.compute_longest_palindrome(T)
 
         # find the maximum element in dp
