@@ -69,7 +69,7 @@ class Solution(object):
     #                          = 16
     #
 
-
+    # recursive binary search
     def findMedianSortedArrays(self, nums1, nums2):
         """
         :type nums1: List[int]
@@ -77,26 +77,105 @@ class Solution(object):
         :rtype: float
         """
         total = len(nums1) + len(nums2)
-        if total % 2 != 0:  # total is odd
+
+        if total & 1:
+            # odd case
             return self.find_kth(nums1, nums2, total/2+1)
         else:
+            # even case
             return (self.find_kth(nums1, nums2, total/2) + self.find_kth(nums1, nums2, total/2+1)) / 2.0
 
     def find_kth(self, nums1, nums2, k):
+        """
+        Find the k-th smallest element in nums1 + nums2
+        :param nums1: sorted array
+        :param nums2: sorted array
+        :param k: the k-th smallest
+        """
         # always assume the length of nums1 is less than that of nums2
         if len(nums1) > len(nums2):
             return self.find_kth(nums2, nums1, k)
 
         if len(nums1) == 0:
             return nums2[k-1]
+
+        # base case:
         if k == 1:
             return min(nums1[0], nums2[0])
 
+        # recursive step:
         n1 = min(k/2, len(nums1))
         n2 = k - n1
+
+        # compare the n1-th element in nums1 with the n2-th element in nums2
         if nums1[n1-1] < nums2[n2-1]:
             return self.find_kth(nums1[n1:], nums2[:n2], k-n1)
         elif nums1[n1-1] > nums2[n2-1]:
             return self.find_kth(nums1[:n1], nums2[n2:], k-n2)
         else:
             return nums1[n1-1]
+
+
+    # linear search
+    def findMedianSortedArray_linear(self, nums1, nums2):
+        assert nums1 is not None
+        assert nums2 is not None
+
+        m, n = len(nums1), len(nums2)
+
+        if m == 0 and n == 0:
+            return 0.
+        elif m == 0:
+            if n & 0x1:
+                return nums2[n / 2]
+            else:
+                return (nums2[n / 2 - 1] + nums2[n / 2]) * 0.5
+        elif n == 0:
+            if m & 1:
+                return nums1[m / 2]
+            else:
+                return (nums1[m / 2 - 1] + nums[n / 2]) * 0.5
+        else:
+            if m > n:
+                return self.findMedianSortedArray_linear(nums2, nums1)
+
+            idx = (m + n) / 2 - 1
+            print('idx: ', idx)
+
+            is_odd = False
+            if (m + n) & 1:
+                is_odd = True
+            print("is odd: ", is_odd)
+
+            res = 0
+            i = j = 0
+            while i < m and j < n:
+                print('i: %d, j: %d, idx: %d' % (i, j, idx))
+
+                if (i + j + 2) == idx + 1:
+                    res = min(nums1[i], nums2[j])
+                    if not is_odd:
+                        if i + 1 < m:
+                            res += min(nums1[i + 1], nums2[j])
+                        else:
+                            res += nums2[j]
+                        res *= 0.5
+                    break
+
+                elif (i + j + 2) < idx + 1:
+                    if nums1[i] <= nums2[j]:
+                        i += 1
+                    else:
+                        j += 1
+
+                else:
+                    return -1
+
+            while j < n and (i + j + 1) < idx:
+                j += 1
+
+            res = nums2[j]
+            if not is_odd:
+                res = (res + nums2[j + 1]) * 0.5
+
+            return res
