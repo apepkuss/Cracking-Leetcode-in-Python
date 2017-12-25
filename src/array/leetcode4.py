@@ -32,9 +32,6 @@ class Solution(object):
     # while comparing two elements of two arrays. If count becomes k (for 2n elements), we have reached the median. Take
     # the advantage of the elements at indexes k-1 and k in the merged array.
 
-
-
-
     # Method 2: By comparing the medians of two sorted arrays. The time complexity is O(Log(m+n)).
     # The idea is to use divide-and-conquer to first find the median of each array, then compare them.
     # The algorithm is shown as below. **This idea works only when the two arrays have same size.
@@ -115,7 +112,6 @@ class Solution(object):
         else:
             return nums1[n1-1]
 
-
     # linear search
     def findMedianSortedArray_linear(self, nums1, nums2):
         assert nums1 is not None
@@ -134,7 +130,7 @@ class Solution(object):
             if m & 1:
                 return nums1[m / 2]
             else:
-                return (nums1[m / 2 - 1] + nums[n / 2]) * 0.5
+                return (nums1[m / 2 - 1] + nums2[n / 2]) * 0.5
         else:
             if m > n:
                 return self.findMedianSortedArray_linear(nums2, nums1)
