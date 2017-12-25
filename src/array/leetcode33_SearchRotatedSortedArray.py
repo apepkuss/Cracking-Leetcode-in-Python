@@ -28,18 +28,25 @@ class Solution(object):
             if nums[mid] == target:
                 return mid
 
-            elif nums[mid] < target:
-                if nums[mid + 1] <= target <= nums[tail]:
+            # target > nums[mid]
+            elif target > nums[mid]:
+                if nums[tail] >= target:
                     head = mid + 1
+
                 elif nums[head] >= nums[mid]:
                     tail = mid - 1
+
                 else:
                     break
+
+            # target < nums[mid]
             else:
-                if nums[head] <= target <= nums[mid - 1]:
+                if nums[head] <= target:
                     tail = mid - 1
+
                 elif nums[mid] >= nums[tail]:
                     head = mid + 1
+
                 else:
                     break
 
