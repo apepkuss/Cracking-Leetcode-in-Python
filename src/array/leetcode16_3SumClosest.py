@@ -15,6 +15,8 @@ class Solution(object):
         :type target: int
         :rtype: int
         """
+        assert nums is not None
+
         # sort target array
         nums.sort()
         min_gap = 2 ** 32 - 1
