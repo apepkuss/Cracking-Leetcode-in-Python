@@ -16,18 +16,24 @@ class Solution(object):
         :type matrix: List[List[int]]
         :rtype: void Do not return anything, modify matrix in-place instead.
         """
+        assert matrix is not None
+
         rows = len(matrix)
         cols = len(matrix[0])
 
-        if rows<2 or cols<2:
+        if rows < 2 or cols < 2:
             return
 
+        print('Before rotate: {0}'.format(matrix))
+
         # invert the matrix
-        for j in range(cols):
-            for i in range(rows/2):
-                matrix[i][j], matrix[rows-1-i][j] = matrix[rows-1-i][j], matrix[i][j]
+        i, j = 0, rows-1
+        while i < j:
+            matrix[i], matrix[j] = matrix[j], matrix[i]
+        print('After invert: {0}'.format(matrix))
 
         # flap the matrix along the main diagonal
         for i in range(rows):
-            for j in range(i+1,cols):
+            for j in range(i):
                 matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j]
+        print('After flap: {0}'.format(matrix))
