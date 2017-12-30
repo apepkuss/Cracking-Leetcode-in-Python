@@ -16,24 +16,34 @@ class Solution(object):
         :type height: List[int]
         :rtype: int
         """
-        n = len(height)
-        if n==0: return 0
-
-        # from left to right, compute leftmost[i],
-        # which means the most height on the left
-        # side of the i-th position
-        leftmost = [height[0]]
-        for x in xrange(1, n):
-            leftmost.append(max(leftmost[-1], height[x]))
+        assert height is not None
 
         water = 0
-        # rightmost indicates the most height on the
-        # right side of the i-th position from right
-        # to left
-        rightmost = height[n-1]
-        for x in xrange(n-1, -1, -1):
-            if height[x]<rightmost and height[x]<leftmost[x]:
-                water += min(rightmost, leftmost[x]) - height[x]
-            elif height[x] > rightmost:
-                rightmost = height[x]
+        if len(height) <= 2:
+            return water
+
+        # leftmost[i] indicates the largest value on the left side of height[i] so far
+        leftmost = []
+        for i in range(len(height)):
+            if not leftmost:
+                leftmost.append(height[i])
+            else:
+                leftmost.append(max(leftmost[-1], height[i]))
+        print('left: ', leftmost)
+
+        # rightmost indicates the largest value on the right side of height[i] so far
+        rightmost = height[-1]
+        for i in range(len(height) - 1, -1, -1):
+            print('At {0}, left:{1}, right:{2}, height:{3}'.format(i, leftmost[i], rightmost, height[i]))
+
+            # compute water
+            if height[i] < leftmost[i] and height[i] < rightmost:
+                water += min(leftmost[i], rightmost) - height[i]
+                print('water: ', water)
+
+            # update rightmost
+            if height[i] > rightmost:
+                rightmost = height[i]
+                print('right: ', rightmost)
+
         return water
