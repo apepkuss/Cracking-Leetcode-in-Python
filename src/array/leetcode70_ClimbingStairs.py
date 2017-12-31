@@ -13,12 +13,16 @@ class Solution(object):
     Note: Given n will be a positive integer.
     """
     def climbStairs_dp1(self, n):  # O(n) time, O(n) space
-        # dp[i] indicates the number of ways to climb i stairs to the top
-        dp = [0 for _ in xrange(n+1)]
-        dp[0] = 1
+        assert n >= 0
+
+        # dp[i] indicates the number of ways of climbing i stairs to the top
+        dp = [0 for _ in range(n+1)]
         dp[1] = 1
-        for x in xrange(2, n+1):
+        dp[2] = 2
+
+        for x in range(3, n+1):
             dp[x] = dp[x-1]+dp[x-2]
+
         return dp[n]
 
     def climbStairs_dp2(self, n):  # O(n) time, O(1) space
@@ -26,18 +30,22 @@ class Solution(object):
         :type n: int
         :rtype: int
         """
+        assert n >= 0
+
+        if n == 0: return 0
         if n == 1: return 1
         if n == 2: return 2
 
         first, second, third = 1, 2, 0
-        for i in range(2, n):
+        for i in range(3, n+1):
             third = first + second
             first, second = second, third
 
         return third
 
+
 if __name__ == "__main__":
-    res = Solution().climbStairs_dp1(2)
+    res = Solution().climbStairs_dp1(6)
     print res
-    res = Solution().climbStairs_dp2(2)
+    res = Solution().climbStairs_dp2(6)
     print res
