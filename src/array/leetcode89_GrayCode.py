@@ -23,14 +23,32 @@ class Solution(object):
 
     For now, the judge is able to judge based on one instance of gray code sequence. Sorry about that.
     """
-    def grayCode(self, n): # RT: O(n)
+    def greyCode_fast(self, n): # RT: O(n)
         res=[]
         size=1<<n
         for i in range(size):
             res.append((i>>1)^i)
         return res
 
+    def greyCode_dp(self, n):
+        assert n >= 0
+
+        # dp[i] indicates the sequence of i-bit gray code
+        dp = [[0], [0, 1]]
+
+        for i in range(2, n + 1):
+            # Example: if dp[-1]=[0,1], then tmp=[0,1,1,0]
+            tmp = dp[-1] + dp[-1][::-1]
+            k = 1 << (i - 1)
+            for j in range(len(tmp) / 2, len(tmp)):
+                tmp[j] = tmp[j] ^ k
+            dp.append(tmp)
+            print('dp[{0}]={1}'.format(i, dp[-1]))
+
+        return dp[n]
+
+
 if __name__ == "__main__":
     mysolution = Solution()
-    res = mysolution.grayCode(3)
+    res = mysolution.greyCode_dp(3)
     print res
