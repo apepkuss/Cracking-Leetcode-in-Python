@@ -39,9 +39,13 @@ class Solution(object):
         for i in range(2, n + 1):
             # Example: if dp[-1]=[0,1], then tmp=[0,1,1,0]
             tmp = dp[-1] + dp[-1][::-1]
+
+            # set the i-th bit as 1
             k = 1 << (i - 1)
+            # k xor each of the second half elements
             for j in range(len(tmp) / 2, len(tmp)):
                 tmp[j] = tmp[j] ^ k
+
             dp.append(tmp)
             print('dp[{0}]={1}'.format(i, dp[-1]))
 
